@@ -29,12 +29,8 @@ module JsAssets
     end
 
     def self.asset_path(path)
-      if digest?
-        file_path = ::Rails.application.assets[path].digest_path
-      else
-        file_path = path
-      end
-      return File.join('/', config.assets.prefix, file_path)
+      file_path = digest? ? ::Rails.application.assets[path].digest_path : path
+      ActionController::Base.helpers.asset_path(file_path)
     end
 
     # will return logical path for the asset
